@@ -1,0 +1,41 @@
+#include "philo.h"
+
+
+int ft_chesk_argument(t_args *st)
+{
+	int c;
+
+	c =  ft_chek_list(st);
+	if (c == 0)
+		return (0);
+	return (1);
+}
+
+void	ft_philo(int ac, char **argv)
+{
+	t_args st;
+	int	c;
+
+	c = 0;
+	printf("int argc %d\n",ac);
+	st.num_philos = ft_atoi(argv[1]);
+	st.time_to_die = ft_atoi(argv[2]);
+	st.time_to_eat = ft_atoi(argv[3]);
+	st.time_to_sleep = ft_atoi(argv[4]);
+	st.must_eat = ft_atoi(argv[5]);
+	c = ft_chesk_argument(&st);
+	if (c == 1)
+		printf("work\n");
+	else
+		printf("ERROR\n");
+}
+
+int	main(int argc, char *argv[])
+{
+	if (argc == 5 || argc == 6)
+	{
+		ft_philo(argc, argv);
+	}
+	else
+		printf("Error: invalid number of arguments.\n");
+}
