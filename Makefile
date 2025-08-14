@@ -1,13 +1,12 @@
 NAME    = philo
 CC      = cc
 CFLAGS  = -Wall -Wextra -Werror
-SRC     = philo.c chesk_number.c
+SRC     = philo.c chesk_number.c ft_atoi.c ft_criate_philo.c ft_free.c
 OBJ     = $(SRC:.c=.o)
 
-LIBFT_DIR = Libft
-LIBFT_A = $(LIBFT_DIR)/libft.a
 
-all: $(LIBFT_A) $(NAME)
+
+all:  $(NAME)
 
 $(LIBFT_A):
 	make -C $(LIBFT_DIR)
@@ -19,11 +18,9 @@ $(NAME): $(OBJ)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	make -C $(LIBFT_DIR) clean
 	rm -f $(OBJ)
 
 fclean: clean
-	make -C $(LIBFT_DIR) fclean
 	rm -f $(NAME)
 
 re: fclean all

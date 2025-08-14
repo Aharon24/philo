@@ -1,11 +1,15 @@
 #include "philo.h"
 
-
-int ft_chesk_argument(t_args *st)
+void	ft_work_philo(t_args *st)
 {
-	int c;
+	ft_criate_philo(st);
+}
 
-	c =  ft_chek_list(st);
+int	ft_chesk_argument(t_args *st)
+{
+	int	c;
+
+	c = ft_chek_list(st);
 	if (c == 0)
 		return (0);
 	return (1);
@@ -13,21 +17,26 @@ int ft_chesk_argument(t_args *st)
 
 void	ft_philo(int ac, char **argv)
 {
-	t_args st;
-	int	c;
+	t_args	*st;
+	int		c;
 
 	c = 0;
-	printf("int argc %d\n",ac);
-	st.num_philos = ft_atoi(argv[1]);
-	st.time_to_die = ft_atoi(argv[2]);
-	st.time_to_eat = ft_atoi(argv[3]);
-	st.time_to_sleep = ft_atoi(argv[4]);
-	st.must_eat = ft_atoi(argv[5]);
-	c = ft_chesk_argument(&st);
+	st = malloc(sizeof(t_args));
+	printf("int argc %d\n", ac);
+	st->num_philos = ft_atoi(argv[1]);
+	st->time_to_die = ft_atoi(argv[2]);
+	st->time_to_eat = ft_atoi(argv[3]);
+	st->time_to_sleep = ft_atoi(argv[4]);
+	if (ac == 6)
+    	st->must_eat = ft_atoi(argv[5]);
+	else
+    	st->must_eat = -1;
+	c = ft_chesk_argument(st);
 	if (c == 1)
-		printf("work\n");
+		ft_work_philo(st);
 	else
 		printf("ERROR\n");
+	ft_free_and_end(st);
 }
 
 int	main(int argc, char *argv[])
