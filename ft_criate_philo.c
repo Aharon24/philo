@@ -1,10 +1,31 @@
 #include "philo.h"
 
+void ft_create_mutex(t_args *st)
+{
+    int i;
+
+    st->forks =  malloc(sizeof(pthread_mutex_t) * st->num_philos);
+    if (!st->forks)
+    {
+        printf("Error: malloc failed for forks\n");
+        return;
+    }
+    i = 0;
+    while (i < st->num_philos)
+    {
+        pthread_mutex_init(&st->forks[i], NULL);
+        i++;
+    }
+    st->someone_died = 0;
+}
+
 void *my_thread_function(void *arg) 
 {
     int i;
     
     i = *(int *)arg;
+    //pthread_mutex_lock(arg->death_mutex);
+   // pthread_mutex_unlock(arg->death_mutex);
     printf("philo %d\n",i);
     return NULL;
 }

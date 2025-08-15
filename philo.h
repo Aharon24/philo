@@ -6,14 +6,30 @@
 #include <pthread.h>      // потоки и мьютексы
 #include <stdio.h>
 
+struct s_args;
+
+typedef struct s_philo
+{
+	int				id;
+	
+	struct s_args	args;
+	
+}	t_philo;
+
+
+
 typedef struct s_args
 {
-	int	num_philos;
-	int	time_to_die;
-	int	time_to_eat;
-	int	time_to_sleep;
-	int	must_eat;
-	int *ids;
+	int				num_philos;
+	int				time_to_die;
+	int				time_to_eat;
+	int				time_to_sleep;
+	int				must_eat;
+	int				*ids;
+	int				someone_died;
+	pthread_mutex_t *forks;
+    pthread_mutex_t print_mutex;
+    pthread_mutex_t death_mutex;
 }	t_args;
 
 
@@ -24,7 +40,9 @@ void ft_free_arr(int **arr);
 //ft_create_philo.c
 void	*my_thread_function(void *arg);
 void	ft_create(t_args *st, pthread_t *threads);
-void	ft_criate_philo(t_args *st);
+void	
+ft_criate_philo(t_args *st);
+void	ft_create_mutex(t_args *st);
 
 
 /// philo.c
