@@ -34,29 +34,30 @@ void ft_setupe_fork_p(t_args *st, t_philo *philo_)
 void ft_create(t_args *st)
 {
     int i;
-    t_philo *start;
-    t_philo *j;
+    t_philo *head;
+    t_philo *current;
 
     i = 0;
-    st->philo = malloc(sizeof(t_philo));
-    start = st->philo;
-    j = st->philo;
-    st->philo->next = NULL;
+    st->philo  = ft_crate_list(st);
+    head = st->philo;
+    current = head;
+    //ft_print_list(st->philo);
     while (i < st->num_philos)
     {
-        pthread_create(&st->philo->threads,NULL,my_thread_function,&st->ids[i]);
-        st->philo = st->philo->next;
-        st->philo = malloc(sizeof(t_philo));
+        pthread_create(&current->threads,NULL,my_thread_function,&st->time_to_die);
+        printf("%d\n",i);
+        current = current->next;
         i++;
     }
     i = 0;
+    current = head;
     while(i < st->num_philos)
     {
-        pthread_join(j->threads,NULL);
-        j = j->next;
+        pthread_join(current->threads,NULL);
+        current = current->next;
         i++;
     }
-    ft_setupe_fork_p(st, start);
+   // ft_setupe_fork_p(st, st->philo);
 }
 
 void ft_create_mutex(t_args *st)
@@ -81,17 +82,15 @@ void ft_create_mutex(t_args *st)
 void *my_thread_function(void *arg) 
 {
     int i;
+    static int j;
 
+    j = 0;
     i = *(int *)arg;  // приводим void* к int*
-    if (i)
-        printf("philo %d\n", i);
-    else
-        printf("i\n");
+        printf("philo j %d i %d\n", j,i);
+            j++;
 
     return NULL;
 }
-
-
 
 void ft_criate_philo(t_args *st)
 {

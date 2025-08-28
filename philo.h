@@ -54,3 +54,9 @@ int		ft_chek_list(t_args *st);
 
 // ft_atoi.c
 int		ft_atoi(const char *str);
+
+
+///ft_create_list.c
+
+t_philo *ft_crate_list(t_args *st);
+void ft_print_list(t_philo *p);
