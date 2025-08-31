@@ -4,7 +4,7 @@ void	ft_work_philo(t_args *st)
 {
 	ft_create_mutex(st);
 	ft_criate_philo(st);
-	//ft_philo_start_day(st);
+	ft_philo_start_day(st,st->philo);
 }
 
 int	ft_chesk_argument(t_args *st)
