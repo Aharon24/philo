@@ -8,41 +8,39 @@
 
 typedef struct s_philo
 {
-    int id;
-    int left_fork;
-    int right_fork;
-    pthread_t threads;
-    struct s_philo *next;
+	int				id;
+	int				left_fork;
+	int				right_fork;
+	pthread_t		threads;
+	struct s_philo	*next;
 
-} t_philo;
+}	t_philo;
 
 typedef struct s_args
 {
-    int num_philos;
-    int time_to_die;
-    int time_to_eat;
-    int time_to_sleep;
-    int must_eat;
-    int *ids;
-    int someone_died;
-    pthread_mutex_t *forks;
-    pthread_mutex_t print_mutex;
-    pthread_mutex_t death_mutex;
-    t_philo *philo;
-    
-} t_args;
+	int				num_philos;
+	int				time_to_die;
+	int				time_to_eat;
+	int				time_to_sleep;
+	int				must_eat;
+	int				*ids;
+	int				someone_died;
+	pthread_mutex_t	*forks;
+	pthread_mutex_t	print_mutex;
+	pthread_mutex_t	death_mutex;
+	t_philo			*philo;
+}	t_args;
 
 //ft_free.c
-void ft_free_and_end(t_args *st);
-void ft_free_arr(int **arr);
+void	ft_free_and_end(t_args *st);
+void	ft_free_arr(int **arr);
 
 //ft_create_philo.c
 void	*my_thread_function(void *arg);
 void	ft_create(t_args *st);
-void    ft_setupe_fork_p(t_args *st, t_philo *philo_);
-void    ft_criate_philo(t_args *st);
+void	ft_setupe_fork_p(t_args *st, t_philo *philo_);
+void	ft_criate_philo(t_args *st);
 void	ft_create_mutex(t_args *st);
-
 
 /// philo.c
 void	ft_philo(int ac, char **Argv);
@@ -55,8 +53,10 @@ int		ft_chek_list(t_args *st);
 // ft_atoi.c
 int		ft_atoi(const char *str);
 
+//fork_crate.c
+//int ft_fork_crate(int id, int number, t_args *st); ???? 
+void	ft_print_fork(int i, t_philo *start, int phi_caunt);
 
 ///ft_create_list.c
-
-t_philo *ft_crate_list(t_args *st);
-void ft_print_list(t_philo *p);
+void	ft_print_list(t_philo *p);
+t_philo	*ft_crate_list(t_args *st);
