@@ -6,6 +6,13 @@
 #include <pthread.h>      // потоки и мьютексы
 #include <stdio.h>
 
+typedef struct s_time
+{
+	time_t time;
+	suseconds_t	seconds;
+}	t_time;
+
+
 typedef struct s_philo
 {
 	int				id;
@@ -29,6 +36,7 @@ typedef struct s_args
 	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	death_mutex;
 	t_philo			*philo;
+	t_time			time;
 }	t_args;
 
 //ft_free.c
@@ -37,7 +45,7 @@ void	ft_free_arr(int **arr);
 
 //ft_create_philo.c
 void	*my_thread_function(void *arg);
-void	ft_create(t_args *st);
+void	ft_create(t_args *st, t_philo *s_philo);
 void	ft_setupe_fork_p(t_args *st, t_philo *philo_);
 void	ft_criate_philo(t_args *st);
 void	ft_create_mutex(t_args *st);

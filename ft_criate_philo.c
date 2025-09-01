@@ -29,29 +29,22 @@ void	ft_setupe_fork_p(t_args *st, t_philo *philo_)
 	// ft_print_fork(i,start,st->num_philos);
 }
 
-void	ft_create(t_args *st)
+void	ft_create(t_args *st, t_philo *philo)
 {
-	int		i;
-	t_philo	*head;
-	t_philo	*current;
+	int			i;
+	pthread_t	threads_i;
 
 	i = 0;
-	st->philo = ft_crate_list(st);
-	head = st->philo;
-	current = head;
 	while (i < st->num_philos)
 	{
-		pthread_create(&current->threads, NULL,
+		pthread_create(&st->philo[i], NULL,
 			my_thread_function, &st->time_to_die);
-		current = current->next;
 		i++;
 	}
 	i = 0;
-	current = head;
 	while (i < st->num_philos)
 	{
-		pthread_join(current->threads, NULL);
-		current = current->next;
+		pthread_join(philo[i].threads, NULL);
 		i++;
 	}
 	ft_setupe_fork_p(st, st->philo);
@@ -87,5 +80,7 @@ void	*my_thread_function(void *arg)
 
 void	ft_criate_philo(t_args *st)
 {
-	ft_create(st);
+	t_philo philo[st->num_philos];
+	st->philo = philo;
+	ft_create(st,st->philo);
 }

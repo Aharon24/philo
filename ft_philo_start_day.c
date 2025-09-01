@@ -20,7 +20,6 @@ void ft_philo_start_day(t_args *st,t_philo *philo)
 	{
 		//ft_get_fork_eat(st);
 		//ft_sleep(st->time_to_sleep, philo);
-
 		philo = philo->next;
 		if(philo->next == NULL)
 		{

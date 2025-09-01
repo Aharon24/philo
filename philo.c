@@ -30,9 +30,15 @@ void	ft_philo(int ac, char **argv)
 	st->time_to_eat = ft_atoi(argv[3]);
 	st->time_to_sleep = ft_atoi(argv[4]);
 	if (ac == 6)
+	{
 		st->must_eat = ft_atoi(argv[5]);
-	else
-		st->must_eat = -1;
+		if (st->must_eat == -1)
+		{
+			printf("ERROR\n");
+			ft_free_and_end(st);
+			return ;
+		}
+	}
 	c = ft_chesk_argument(st);
 	if (c == 1)
 		ft_work_philo(st);
