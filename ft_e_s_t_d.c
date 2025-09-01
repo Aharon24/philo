@@ -8,5 +8,4 @@
 // int ft_think(int time, t_philo *philo)
 // {
 //     printf("think");
-// }
-  
+// } 

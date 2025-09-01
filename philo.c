@@ -4,7 +4,7 @@ void	ft_work_philo(t_args *st)
 {
 	ft_create_mutex(st);
 	ft_criate_philo(st);
-	ft_philo_start_day(st,st->philo);
+	ft_philo_start_day(st, st->philo);
 }
 
 int	ft_chesk_argument(t_args *st)
@@ -24,7 +24,6 @@ void	ft_philo(int ac, char **argv)
 
 	c = 0;
 	st = malloc(sizeof(t_args));
-	printf("int argc %d\n", ac);
 	st->num_philos = ft_atoi(argv[1]);
 	st->time_to_die = ft_atoi(argv[2]);
 	st->time_to_eat = ft_atoi(argv[3]);

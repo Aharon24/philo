@@ -8,10 +8,9 @@
 
 typedef struct s_time
 {
-	time_t time;
+	time_t		time;
 	suseconds_t	seconds;
 }	t_time;
-
 
 typedef struct s_philo
 {
@@ -71,13 +70,11 @@ t_philo	*ft_crate_list(t_args *st);
 
 //ft_philo_start_day.c
 
-void ft_philo_start_day(t_args *st,t_philo *philo);
-void	ft_get_fork_eat(t_args *st);
-void	ft_eat(t_args *st,  int id, t_philo *start, int i);
-
+void	ft_philo_start_day(t_args *st, t_philo *philo);
+void	ft_get_fork(t_args *st);
+void	ft_eat(t_args *st, int id, t_philo *start, int i);
 
 // ft_e_s_t_d.c
 
-int		ft_sleep(int time,t_philo *philo);
+int		ft_sleep(int time, t_philo *philo);
 int		ft_think(int time, t_philo *philo);
-
