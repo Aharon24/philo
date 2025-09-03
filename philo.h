@@ -6,6 +6,9 @@
 #include <pthread.h>      // потоки и мьютексы
 #include <stdio.h>
 
+struct  s_args;
+
+
 typedef struct s_time
 {
 	time_t		time;
@@ -19,6 +22,7 @@ typedef struct s_philo
 	int				right_fork;
 	pthread_t		threads;
 	struct s_philo	*next;
+	struct s_args	*st;
 
 }	t_philo;
 
@@ -71,8 +75,8 @@ t_philo	*ft_crate_list(t_args *st);
 //ft_philo_start_day.c
 
 void	ft_philo_start_day(t_args *st, t_philo *philo);
-void	ft_get_fork(t_args *st);
-void	ft_eat(t_args *st, int id, t_philo *start, int i);
+void	ft_get_fork(t_philo *philo, int id);
+void	ft_eat(t_args *st, int left, int rigth);
 
 // ft_e_s_t_d.c
 

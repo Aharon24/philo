@@ -4,11 +4,9 @@ void	ft_setupe_fork_p(t_args *st, t_philo *philo_)
 {
 	int		i;
 	int		n;
-	t_philo	*start;
 
 	n = st->num_philos;
 	i = 0;
-	start = philo_;
 	while (i < st->num_philos)
 	{
 		if (i == 0)
@@ -33,10 +31,17 @@ void	ft_create(t_args *st, t_philo *philo)
 	int			i;
 
 	i = 0;
+	ft_setupe_fork_p(st, st->philo); //????????;
 	while (i < st->num_philos)
 	{
-		pthread_create(&st->philo[i].threads, NULL,
-			my_thread_function, &st->time_to_die);
+    	philo[i].st = st;
+    	i++;
+	}
+	i = 0;
+	while (i < st->num_philos)
+	{
+		 pthread_create(&st->philo[i].threads, NULL,
+			my_thread_function, &philo[i]);
 		i++;
 	}
 	i = 0;
@@ -45,7 +50,6 @@ void	ft_create(t_args *st, t_philo *philo)
 		pthread_join(philo[i].threads, NULL);
 		i++;
 	}
-	ft_setupe_fork_p(st, st->philo);
 }
 
 void	ft_create_mutex(t_args *st)
@@ -64,15 +68,18 @@ void	ft_create_mutex(t_args *st)
 		pthread_mutex_init(&st->forks[i], NULL);
 		i++;
 	}
+	pthread_mutex_init(&st->print_mutex, NULL);
+	pthread_mutex_init(&st->death_mutex, NULL);
 	st->someone_died = 0;
 }
 
 void	*my_thread_function(void *arg)
 {
-	int	i;
+	t_philo *philo;
 
-	i = *(int *)arg;
-	printf("philo-> i %d\n", i);
+	philo = (t_philo *)arg;
+	//printf("philo-> i %d\n", philo->id);
+	ft_get_fork(philo,philo->id);
 	return (NULL);
 }
 

@@ -1,10 +1,23 @@
 #include "philo.h"
 
+int	ft_argc_six(t_args *st, char **argv)
+{
+	st->must_eat = ft_atoi(argv[5]);
+	if (st->must_eat == -1)
+	{
+		printf("ERROR\n");
+		ft_free_and_end(st);
+		return (1);
+	}
+	else
+		return (0);
+}
+
 void	ft_work_philo(t_args *st)
 {
 	ft_create_mutex(st);
 	ft_criate_philo(st);
-	ft_philo_start_day(st, st->philo);
+	//ft_philo_start_day(st, st->philo);
 }
 
 int	ft_chesk_argument(t_args *st)
@@ -30,14 +43,11 @@ void	ft_philo(int ac, char **argv)
 	st->time_to_sleep = ft_atoi(argv[4]);
 	if (ac == 6)
 	{
-		st->must_eat = ft_atoi(argv[5]);
-		if (st->must_eat == -1)
-		{
-			printf("ERROR\n");
-			ft_free_and_end(st);
+		if (ft_argc_six(st, argv))
 			return ;
-		}
 	}
+	else
+		st->must_eat = -1;
 	c = ft_chesk_argument(st);
 	if (c == 1)
 		ft_work_philo(st);
