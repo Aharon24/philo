@@ -79,6 +79,8 @@ void	*my_thread_function(void *arg)
 {
 	t_philo *philo;
 
+	
+
 	philo = (t_philo *)arg;
 	while (philo->st->someone_died)
 	{
