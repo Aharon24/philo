@@ -35,6 +35,7 @@ void	ft_create(t_args *st, t_philo *philo)
 	while (i < st->num_philos)
 	{
     	philo[i].st = st;
+		philo->id = i;
     	i++;
 	}
 	i = 0;
@@ -70,7 +71,8 @@ void	ft_create_mutex(t_args *st)
 	}
 	pthread_mutex_init(&st->print_mutex, NULL);
 	pthread_mutex_init(&st->death_mutex, NULL);
-	st->someone_died = 0;
+	st->someone_died = 1;
+
 }
 
 void	*my_thread_function(void *arg)
@@ -78,8 +80,15 @@ void	*my_thread_function(void *arg)
 	t_philo *philo;
 
 	philo = (t_philo *)arg;
-	//printf("philo-> i %d\n", philo->id);
-	ft_get_fork(philo,philo->id);
+	while (philo->st->someone_died)
+	{
+		ft_get_fork(philo,philo->id);
+		if (ft_sleep(12, philo) == 0)
+			break ;
+		if (ft_think(12, philo) == 0)
+			break ;
+	}
+	printf("philo end died \n");
 	return (NULL);
 }
 
