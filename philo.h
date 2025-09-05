@@ -8,12 +8,10 @@
 
 struct  s_args;
 
-
-typedef struct s_time
-{
-	time_t		time;
-	suseconds_t	seconds;
-}	t_time;
+typedef  struct s_time {
+    time_t      tv_sec;
+    suseconds_t tv_usec;
+}	t_time_p;
 
 typedef struct s_philo
 {
@@ -39,7 +37,9 @@ typedef struct s_args
 	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	death_mutex;
 	t_philo			*philo;
-	t_time			time;
+	t_time_p		t_Start;
+	t_time_p		t_End;
+	t_time_p		t_Now;
 }	t_args;
 
 //ft_free.c
@@ -82,3 +82,9 @@ void	ft_eat(t_args *st, int left, int rigth);
 
 int		ft_sleep(int time, t_philo *philo);
 int		ft_think(int time, t_philo *philo);
+
+
+//time.c
+
+void ft_get_my_time(t_time_p *t);
+void	ft_time_start(t_args *st);

@@ -78,17 +78,22 @@ void	ft_create_mutex(t_args *st)
 void	*my_thread_function(void *arg)
 {
 	t_philo *philo;
-
+	long 	time;
 	
 
 	philo = (t_philo *)arg;
 	while (philo->st->someone_died)
 	{
+		ft_get_my_time(&philo->st->t_Start);
 		ft_get_fork(philo,philo->id);
+		////Eat
 		if (ft_sleep(12, philo) == 0)
 			break ;
 		if (ft_think(12, philo) == 0)
 			break ;
+		ft_get_my_time(&philo->st->t_End);
+		time = philo->st->t_Start.tv_sec - philo->st->t_End.tv_sec;
+		printf("%ld\n",time);
 	}
 	printf("philo end died \n");
 	return (NULL);
