@@ -21,6 +21,7 @@ typedef struct s_philo
 	int				right_fork;
 	pthread_t		threads;
 	struct s_philo	*next;
+	//long			time;
 	struct s_args	*st;
 
 }	t_philo;
@@ -37,7 +38,7 @@ typedef struct s_args
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	death_mutex;
-	pthread_mutex_t	m_time;
+	pthread_mutex_t	time_t;
 	t_philo			*philo;
 	t_time_p		t_start;
 	t_time_p		t_end;

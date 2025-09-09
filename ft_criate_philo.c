@@ -71,10 +71,18 @@ void	*my_thread_function(void *arg)
 	philo = (t_philo *)arg;
 	if (philo->st->someone_died == 0)
 		return (NULL);
-	while (philo->st->someone_died)
+	while (1)
 	{
-		if (!philo->st->someone_died)
-			break;
+		pthread_mutex_lock(&philo->st->death_mutex);
+        if (philo->st->someone_died == 0)
+        {
+            pthread_mutex_unlock(&philo->st->death_mutex);
+			pthread_mutex_lock(&philo->st->print_mutex);
+			printf("philo died \n");
+			pthread_mutex_unlock(&philo->st->print_mutex);
+            break;
+        }
+        pthread_mutex_unlock(&philo->st->death_mutex);
 		//pthread_mutex_lock(&philo->st->death_mutex);
 		ft_get_fork(philo, philo->id);
 		ft_sleep(philo->st, philo->id);
@@ -82,7 +90,6 @@ void	*my_thread_function(void *arg)
 		// philo->st->time = philo->st->t_End.tv_sec -
 		// philo->st->t_Start.tv_sec;
 	}
-	printf("philo died \n");
 	return (NULL);
 }
 
