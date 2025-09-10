@@ -1,8 +1,8 @@
 NAME    = philo
 CC      = cc
 CFLAGS  = -Wall -Wextra -Werror -g3
-SRC     = philo.c chesk_number.c ft_atoi.c ft_criate_philo.c ft_free.c \
-			fork_crate.c ft_philo_start_day.c  \
+SRC     = philo.c chesk_number.c ft_criate_philo.c ft_free.c \
+			ft_philo_start_day.c  \
 			time.c
 OBJ     = $(SRC:.c=.o)
 

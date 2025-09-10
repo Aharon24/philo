@@ -3,9 +3,14 @@
 
 void	ft_sleep(t_args *st, int id)
 {
+	pthread_mutex_lock(&st->death_mutex);
 	if (st->someone_died == 0)
-		return ;
-	pthread_mutex_lock(&st->time_t);
+	{
+    	pthread_mutex_unlock(&st->death_mutex);
+    	return ;
+	}
+	pthread_mutex_unlock(&st->death_mutex);
+	// pthread_mutex_lock(&st->time_t);
 	ft_get_my_time(&st->t_start);
 	usleep(1000 * st->time_to_sleep);
 	ft_get_my_time(&st->t_end);
@@ -15,19 +20,26 @@ void	ft_sleep(t_args *st, int id)
 	pthread_mutex_lock(&st->print_mutex);
 	printf("%ld %d is sleeping\n",st->time, id);
 	pthread_mutex_unlock(&st->print_mutex);
-	pthread_mutex_unlock(&st->time_t);
+	// pthread_mutex_unlock(&st->time_t);
 }
 
 void	ft_eat(t_args *st, int left, int rigth, int id)
 {
+	pthread_mutex_lock(&st->death_mutex);
 	if (st->someone_died == 0)
-		return ;
-	pthread_mutex_lock(&st->time_t);
+	{
+    	pthread_mutex_unlock(&st->death_mutex);
+    	return ;
+	}
+	pthread_mutex_unlock(&st->death_mutex);
+	// pthread_mutex_lock(&st->time_t);
 	ft_get_my_time(&st->t_start);
+
 	pthread_mutex_lock(&st->forks[left]);
 	pthread_mutex_lock(&st->forks[rigth]);
 	//printf("%d is eating fork left  -> %d and rigth -> %d\n", id, left,rigth);
 	usleep(1000 * st->time_to_eat);
+
 	ft_get_my_time(&st->t_end);
 	st->tt = (st->t_end.tv_sec - st->t_start.tv_sec) * 1000
              + (st->t_end.tv_usec - st->t_start.tv_usec) / 1000;
@@ -37,16 +49,17 @@ void	ft_eat(t_args *st, int left, int rigth, int id)
 	printf("%ld %d has taken a fork\n", st->time, id);
 	printf("%ld %d is eating\n", st->time, id);
 	pthread_mutex_unlock(&st->print_mutex);
+
 	pthread_mutex_unlock(&st->forks[left]);
 	pthread_mutex_unlock(&st->forks[rigth]);
-	pthread_mutex_unlock(&st->time_t);
+
+	// pthread_mutex_unlock(&st->time_t);
 }
 
 int	ft_get_fork(t_philo *philo, int id)
 {
 	if (id % 2 != 0)
 	{
-
 		ft_eat(philo->st, philo->st->philo[id].left_fork,
 			philo->st->philo[id].right_fork, id);
 	}
@@ -57,4 +70,28 @@ int	ft_get_fork(t_philo *philo, int id)
 			philo->st->philo[id].right_fork, id);
 	}
 	return (0);
+}
+
+void	*my_thread_function(void *arg)
+{
+	t_philo	*philo;
+
+	philo = (t_philo *)arg;
+	if (philo->st->someone_died == 0)
+		return (NULL);
+	while (1)
+	{
+		printf("------------------------------------ = %d\n", philo->id);
+		pthread_mutex_lock(&philo->st->death_mutex);
+        if (philo->st->someone_died == 0)
+        {
+			ft_daid(&philo->st->print_mutex, &philo->st->print_mutex,philo->id);
+            pthread_mutex_unlock(&philo->st->death_mutex);
+            break ;
+        }
+		pthread_mutex_unlock(&philo->st->death_mutex);
+		ft_get_fork(philo, philo->id);
+		ft_sleep(philo->st, philo->id);
+	}
+	return (NULL);
 }

@@ -1,5 +1,12 @@
 #include "philo.h"
 
+void ft_daid(pthread_mutex_t *l, pthread_mutex_t *u,int id)
+{
+	pthread_mutex_lock(l);
+	printf("%d diedn\n",id);
+	pthread_mutex_unlock(u);
+}
+
 void	ft_get_my_time(t_time_p *t)
 {
 	struct timeval	tv;

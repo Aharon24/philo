@@ -60,47 +60,8 @@ void	ft_create_mutex(t_args *st)
 	}
 	pthread_mutex_init(&st->print_mutex, NULL);
 	pthread_mutex_init(&st->death_mutex, NULL);
-	 pthread_mutex_init(&st->time_t, NULL);
+	pthread_mutex_init(&st->time_t, NULL);
 	st->someone_died = 1;
-}
-
-void	*my_thread_function(void *arg)
-{
-	t_philo	*philo;
-
-	philo = (t_philo *)arg;
-	if (philo->st->someone_died == 0)
-		return (NULL);
-	while (1)
-	{
-		printf("Thread started with id = %d\n", philo->id);
-		pthread_mutex_lock(&philo->st->death_mutex);
-        if (philo->st->someone_died == 0 )
-        {
-			pthread_mutex_lock(&philo->st->print_mutex);
-			printf("%d diedn\n",philo->id);
-			pthread_mutex_unlock(&philo->st->print_mutex);
-            pthread_mutex_unlock(&philo->st->death_mutex);
-            break;
-        }
-		pthread_mutex_lock(&philo->st->print_mutex);
-		printf("\n %d\n",philo->id);
-		pthread_mutex_unlock(&philo->st->print_mutex);
-		ft_get_fork(philo, philo->id);
-		ft_sleep(philo->st, philo->id);
-		if ((philo->st->tt) > (philo->st->time_to_die))
-		{
-			pthread_mutex_lock(&philo->st->print_mutex);
-			pthread_mutex_unlock(&philo->st->print_mutex);
-			printf("222\n");
-			philo->st->someone_died = 0;
-			pthread_mutex_unlock(&philo->st->time_t);
-			pthread_mutex_unlock(&philo->st->death_mutex);
-			break ;
-		}
-		pthread_mutex_unlock(&philo->st->death_mutex);
-	}
-	return (NULL);
 }
 
 void	ft_criate_philo(t_args *st)
