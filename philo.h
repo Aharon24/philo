@@ -35,6 +35,7 @@ typedef struct s_args
 	int				must_eat;
 	int				someone_died;
 	long			time;
+	long			tt;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	death_mutex;
@@ -73,7 +74,7 @@ void	ft_print_fork(int i, t_philo *start, int phi_caunt);
 
 //ft_philo_start_day.c
 
-void	ft_get_fork(t_philo *philo, int id);
+int		ft_get_fork(t_philo *philo, int id);
 void	ft_eat(t_args *st, int left, int rigth, int id);
 void	ft_sleep(t_args *st, int id);
 //int		ft_think(t_args *st, int left, int rigth,int id);
@@ -89,3 +90,5 @@ void	ft_time_start(t_args *st);
 ◦ timestamp_in_ms X is thinking
 ◦ timestamp_in_ms X died
 */
+	// philo->st->time = (philo->st->t_end.tv_sec - philo->st->t_start.tv_sec) * 1000
+    //          + (philo->st->t_end.tv_usec - philo->st->t_start.tv_usec) / 1000;

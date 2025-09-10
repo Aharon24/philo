@@ -56,11 +56,11 @@ void	ft_create_mutex(t_args *st)
 	while (i < st->num_philos)
 	{
 		pthread_mutex_init(&st->forks[i], NULL);
-
 		i++;
 	}
 	pthread_mutex_init(&st->print_mutex, NULL);
 	pthread_mutex_init(&st->death_mutex, NULL);
+	 pthread_mutex_init(&st->time_t, NULL);
 	st->someone_died = 1;
 }
 
@@ -73,22 +73,32 @@ void	*my_thread_function(void *arg)
 		return (NULL);
 	while (1)
 	{
+		printf("Thread started with id = %d\n", philo->id);
 		pthread_mutex_lock(&philo->st->death_mutex);
-        if (philo->st->someone_died == 0)
+        if (philo->st->someone_died == 0 )
         {
-            pthread_mutex_unlock(&philo->st->death_mutex);
 			pthread_mutex_lock(&philo->st->print_mutex);
-			printf("philo died \n");
+			printf("%d diedn\n",philo->id);
 			pthread_mutex_unlock(&philo->st->print_mutex);
+            pthread_mutex_unlock(&philo->st->death_mutex);
             break;
         }
-        pthread_mutex_unlock(&philo->st->death_mutex);
-		//pthread_mutex_lock(&philo->st->death_mutex);
+		pthread_mutex_lock(&philo->st->print_mutex);
+		printf("\n %d\n",philo->id);
+		pthread_mutex_unlock(&philo->st->print_mutex);
 		ft_get_fork(philo, philo->id);
 		ft_sleep(philo->st, philo->id);
-		//pthread_mutex_unlock(&philo->st->death_mutex);
-		// philo->st->time = philo->st->t_End.tv_sec -
-		// philo->st->t_Start.tv_sec;
+		if ((philo->st->tt) > (philo->st->time_to_die))
+		{
+			pthread_mutex_lock(&philo->st->print_mutex);
+			pthread_mutex_unlock(&philo->st->print_mutex);
+			printf("222\n");
+			philo->st->someone_died = 0;
+			pthread_mutex_unlock(&philo->st->time_t);
+			pthread_mutex_unlock(&philo->st->death_mutex);
+			break ;
+		}
+		pthread_mutex_unlock(&philo->st->death_mutex);
 	}
 	return (NULL);
 }
