@@ -18,8 +18,8 @@ void	ft_setupe_fork_p(t_args *st, t_philo *philo_)
 void	ft_create(t_args *st, t_philo *philo)
 {
 	int			i;
-
 	i = 0;
+	
 	ft_setupe_fork_p(st, st->philo);
 	while (i < st->num_philos)
 	{
@@ -31,7 +31,7 @@ void	ft_create(t_args *st, t_philo *philo)
 	while (i < st->num_philos)
 	{
 		pthread_create(&philo[i].threads, NULL,
-			my_thread_function, &philo[i]);
+			my_thread_function, &st->philo[i]);
 		i++;
 	}
 	i = 0;
