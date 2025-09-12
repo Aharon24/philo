@@ -1,5 +1,18 @@
 #include "philo.h"
 
+
+long	ft_timestamp(t_time_p *start)
+{
+	struct timeval	current;
+	long			ms;
+
+	gettimeofday(&current, NULL);
+	ms = (current.tv_sec - start->tv_sec) * 1000
+		+ (current.tv_usec - start->tv_usec) / 1000;
+	return (ms);
+}
+
+
 void ft_daid(pthread_mutex_t *l, pthread_mutex_t *u,int id)
 {
 	pthread_mutex_lock(l);

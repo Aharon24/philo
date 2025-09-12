@@ -71,12 +71,13 @@ void	ft_print_fork(int i, t_philo *start, int phi_caunt);
 int		ft_get_fork(t_philo *philo, int id);
 void	ft_eat(t_args *st, int left, int rigth, int id);
 void	ft_sleep(t_args *st, int id);
+void	ft_think(t_args *st, int id);
 //time.c
 
 void	ft_get_my_time(t_time_p *t);
 void	ft_time_start(t_args *st);
 void	ft_daid(pthread_mutex_t *l, pthread_mutex_t *u,int id);
-
+long	ft_timestamp(t_time_p *start);
 /*
 ◦ timestamp_in_ms X has taken a fork
 ◦ timestamp_in_ms X is eating
