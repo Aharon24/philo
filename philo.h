@@ -19,8 +19,8 @@ typedef struct s_philo
 	int				id;
 	int				left_fork;
 	int				right_fork;
+	long			last_meal;
 	pthread_t		threads;
-	struct s_philo	*next;
 	struct s_args	*st;
 
 }	t_philo;
@@ -38,6 +38,7 @@ typedef struct s_args
 	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	death_mutex;
 	pthread_mutex_t	time_t;
+	pthread_t		monitor;
 	t_philo			*philo;
 	t_time_p		t_start;
 	t_time_p		t_end;
@@ -50,7 +51,7 @@ void	ft_free_and_end(t_args *st);
 void	ft_free_arr(int **arr);
 
 //ft_create_philo.c
-void	*my_thread_function(void *arg);
+void	*ft_monitor(void *arg);
 void	ft_create(t_args *st, t_philo *s_philo);
 void	ft_setupe_fork_p(t_args *st, t_philo *philo_);
 void	ft_criate_philo(t_args *st);
@@ -68,6 +69,7 @@ void	ft_print_fork(int i, t_philo *start, int phi_caunt);
 
 //ft_philo_start_day.c
 
+void	*my_thread_function(void *arg);
 int		ft_get_fork(t_philo *philo, int id);
 void	ft_eat(t_args *st, int left, int rigth, int id);
 void	ft_sleep(t_args *st, int id);
