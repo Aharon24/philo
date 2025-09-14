@@ -4,27 +4,23 @@ void *ft_monitor(void *arg)
 {
 	t_args	*st;
 	int		i;
-	int		chesk;
 
-	chesk = 0;
 	st = (t_args *)arg;
 	while (1)
 	{
 		i = 0;
 		while (i < st->num_philos)
 		{
-			//write(1,"1\n",1);
+			pthread_mutex_lock(&st->death_mutex);
 			if (st->someone_died != -1)
 			{
-				// write(1,"1\n",1);
-					ft_daid(&st->print_mutex,&st->print_mutex,i +1);
-					chesk = 1;
-					return (NULL);
+				pthread_mutex_unlock(&st->death_mutex);
+				ft_daid(&st->print_mutex,i+1);
+				return (NULL);
 			}
+			pthread_mutex_unlock(&st->death_mutex);
 			i++;
 		}
-		if (chesk)
-			return	(NULL);	
 	}
 	return	(NULL);
 }

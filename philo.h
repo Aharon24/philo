@@ -78,7 +78,7 @@ void	ft_think(t_args *st, int id);
 
 void	ft_get_my_time(t_time_p *t);
 void	ft_time_start(t_args *st);
-void	ft_daid(pthread_mutex_t *l, pthread_mutex_t *u,int id);
+void	ft_daid(pthread_mutex_t *l, int id);
 long	ft_timestamp(t_time_p *start);
 /*
 ◦ timestamp_in_ms X has taken a fork
