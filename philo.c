@@ -15,11 +15,6 @@ int	ft_argc_six(t_args *st, char **argv)
 
 void	ft_work_philo(t_args *st)
 {
-	// if (st->num_philos == 1)
-	// {
-	// 	printf("1 died \n");
-	// 	return ;
-	// }
 	ft_create_mutex(st);
 	ft_criate_philo(st);
 }
@@ -28,7 +23,6 @@ int	ft_chesk_argument(t_args *st)
 {
 	int	c;
 
-	
 	c = ft_chek_list(st);
 	if (c == 0)
 		return (0);

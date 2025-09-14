@@ -66,6 +66,7 @@ int		ft_chek_atoi(int n);
 int		ft_chek_list(t_args *st);
 int		ft_atoi(const char *str);
 void	ft_print_fork(int i, t_philo *start, int phi_caunt);
+void	ft_print_all(t_args *st, long time, int id, int action);
 
 //ft_philo_start_day.c
 
@@ -87,5 +88,3 @@ long	ft_timestamp(t_time_p *start);
 ◦ timestamp_in_ms X is thinking
 ◦ timestamp_in_ms X died
 */
-	// philo->st->time = (philo->st->t_end.tv_sec - philo->st->t_start.tv_sec) * 1000
-    //          + (philo->st->t_end.tv_usec - philo->st->t_start.tv_usec) / 1000;

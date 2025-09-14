@@ -1,6 +1,6 @@
 #include "philo.h"
 
-void *ft_monitor(void *arg)
+void	*ft_monitor(void *arg)
 {
 	t_args	*st;
 	int		i;
@@ -15,16 +15,15 @@ void *ft_monitor(void *arg)
 			if (st->someone_died != -1)
 			{
 				pthread_mutex_unlock(&st->death_mutex);
-				ft_daid(&st->print_mutex,i+1);
+				ft_daid(&st->print_mutex, i + 1);
 				return (NULL);
 			}
 			pthread_mutex_unlock(&st->death_mutex);
 			i++;
 		}
 	}
-	return	(NULL);
+	return (NULL);
 }
-
 
 void	ft_setupe_fork_p(t_args *st, t_philo *philo_)
 {
@@ -43,9 +42,9 @@ void	ft_setupe_fork_p(t_args *st, t_philo *philo_)
 
 void	ft_create(t_args *st, t_philo *philo)
 {
-	int			i;
+	int	i;
+
 	i = 0;
-	
 	ft_setupe_fork_p(st, st->philo);
 	while (i < st->num_philos)
 	{
@@ -63,7 +62,7 @@ void	ft_create(t_args *st, t_philo *philo)
 	}
 	i = 0;
 	pthread_create(&st->monitor, NULL,
-			ft_monitor, st);
+		ft_monitor, st);
 	while (i < st->num_philos)
 	{
 		pthread_join(philo[i].threads, NULL);

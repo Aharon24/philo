@@ -1,5 +1,34 @@
 #include "philo.h"
 
+void	ft_print_all(t_args *st, long time, int id, int action)
+{
+	pthread_mutex_lock(&st->print_mutex);
+	if (st->someone_died != -1)
+	{
+		pthread_mutex_unlock(&st->print_mutex);
+		return ;
+	}
+	pthread_mutex_unlock(&st->print_mutex);
+	if (action == 1)
+	{
+		pthread_mutex_lock(&st->print_mutex);
+		printf("%ld %d has taken a fork\n", time, id);
+		pthread_mutex_unlock(&st->print_mutex);
+	}
+	else if (action == 2)
+	{
+		pthread_mutex_lock(&st->print_mutex);
+		printf("%ld %d is eating\n", time, id);
+		pthread_mutex_unlock(&st->print_mutex);
+	}
+	else if (action == 3)
+	{
+		pthread_mutex_lock(&st->print_mutex);
+		printf("%ld %d is sleeping\n", time, id);
+		pthread_mutex_unlock(&st->print_mutex);
+	}
+}
+
 void	ft_print_fork(int i, t_philo *start, int phi_caunt)
 {
 	i = 0;

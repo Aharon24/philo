@@ -1,6 +1,5 @@
 #include "philo.h"
 
-
 long	ft_timestamp(t_time_p *start)
 {
 	struct timeval	current;
@@ -12,11 +11,10 @@ long	ft_timestamp(t_time_p *start)
 	return (ms);
 }
 
-
-void ft_daid(pthread_mutex_t *l, int id)
+void	ft_daid(pthread_mutex_t *l, int id)
 {
 	pthread_mutex_lock(l);
-	printf("%d diedn\n",id);
+	printf("%d diedn\n", id);
 	pthread_mutex_unlock(l);
 }
 
@@ -32,5 +30,4 @@ void	ft_get_my_time(t_time_p *t)
 void	ft_time_start(t_args *st)
 {
 	ft_get_my_time(&st->t_start);
-	//printf("%ld", st->t_start.tv_sec + st->t_start.tv_usec);
 }
