@@ -14,8 +14,7 @@ void *ft_monitor(void *arg)
 		while (i < st->num_philos)
 		{
 			//write(1,"1\n",1);
-			printf("monitor");
-			if (st->someone_died)
+			if (st->someone_died != -1)
 			{
 				// write(1,"1\n",1);
 					ft_daid(&st->print_mutex,&st->print_mutex,i +1);
@@ -62,7 +61,6 @@ void	ft_create(t_args *st, t_philo *philo)
 	i = 0;
 	while (i < st->num_philos)
 	{
-		printf("i");
 		pthread_create(&philo[i].threads, NULL,
 			my_thread_function, &st->philo[i]);
 		i++;
@@ -97,7 +95,7 @@ void	ft_create_mutex(t_args *st)
 	pthread_mutex_init(&st->print_mutex, NULL);
 	pthread_mutex_init(&st->death_mutex, NULL);
 	pthread_mutex_init(&st->time_t, NULL);
-	st->someone_died = 0;
+	st->someone_died = -1;
 }
 
 void	ft_criate_philo(t_args *st)
