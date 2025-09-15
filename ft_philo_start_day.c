@@ -41,15 +41,17 @@ void	ft_eat(t_args *st, int left, int rigth, int id)
 		pthread_mutex_unlock(&st->forks[left]);
 		return ;
 	}
-	st->philo[id].l_start = ft_timestamp(&st->philo[id].t_start);
+	pthread_mutex_lock(&st->forks[rigth]);
 	ft_print_all(st, st->time, id, 1);
 	ft_print_all(st, st->time, id, 2);
-	usleep(1000 * st->time_to_eat);
+
 	pthread_mutex_lock(&st->deat);
+	st->philo[id].l_start = ft_timestamp(&st->philo[id].t_start);
+	usleep(1000 * st->time_to_eat);
 	st->philo[id].l_end = ft_timestamp(&st->philo[id].t_start);
 	st->philo[id].l_now  =  st->philo[id].l_end - st->philo[id].l_start;
 	if (st->philo[id].l_now > st->time_to_die)
-	st->someone_died = 1;
+		st->someone_died = 1;
 	st->time += st->philo[id].l_now;
 	if (st->someone_died != -1)
 	{
