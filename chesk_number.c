@@ -12,19 +12,19 @@ void	ft_print_all(t_args *st, long time, int id, int action)
 	if (action == 1)
 	{
 		pthread_mutex_lock(&st->print_mutex);
-		printf("%ld %d has taken a fork\n", time, id);
+		printf("%ld %d has taken a fork\n", time, id + 1);
 		pthread_mutex_unlock(&st->print_mutex);
 	}
 	else if (action == 2)
 	{
 		pthread_mutex_lock(&st->print_mutex);
-		printf("%ld %d is eating\n", time, id);
+		printf("%ld %d is eating\n", time, id + 1);
 		pthread_mutex_unlock(&st->print_mutex);
 	}
 	else if (action == 3)
 	{
 		pthread_mutex_lock(&st->print_mutex);
-		printf("%ld %d is sleeping\n", time, id);
+		printf("%ld %d is sleeping\n", time, id + 1);
 		pthread_mutex_unlock(&st->print_mutex);
 	}
 }

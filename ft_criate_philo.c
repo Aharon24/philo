@@ -11,14 +11,16 @@ void	*ft_monitor(void *arg)
 		i = 0;
 		while (i < st->num_philos)
 		{
-			pthread_mutex_lock(&st->death_mutex);
+			pthread_mutex_lock(&st->deat);
 			if (st->someone_died != -1)
 			{
-				pthread_mutex_unlock(&st->death_mutex);
-				ft_daid(&st->print_mutex, i + 1);
+				pthread_mutex_lock(&st->time_t);
+				pthread_mutex_unlock(&st->deat);
+				ft_daid(&st->print_mutex, i + 1,ft_timestamp(&st->t_now));
+				pthread_mutex_unlock(&st->time_t);
 				return (NULL);
 			}
-			pthread_mutex_unlock(&st->death_mutex);
+			pthread_mutex_unlock(&st->deat);
 			i++;
 		}
 	}
@@ -40,11 +42,8 @@ void	ft_setupe_fork_p(t_args *st, t_philo *philo_)
 	}
 }
 
-void	ft_create(t_args *st, t_philo *philo)
+void	ft_create(t_args *st, t_philo *philo, int i)
 {
-	int	i;
-
-	i = 0;
 	ft_setupe_fork_p(st, st->philo);
 	while (i < st->num_philos)
 	{
@@ -57,7 +56,7 @@ void	ft_create(t_args *st, t_philo *philo)
 	while (i < st->num_philos)
 	{
 		pthread_create(&philo[i].threads, NULL,
-			my_thread_function, &st->philo[i]);
+			my_thread_function, &philo[i]);
 		i++;
 	}
 	i = 0;
@@ -88,7 +87,7 @@ void	ft_create_mutex(t_args *st)
 		i++;
 	}
 	pthread_mutex_init(&st->print_mutex, NULL);
-	pthread_mutex_init(&st->death_mutex, NULL);
+	pthread_mutex_init(&st->deat, NULL);
 	pthread_mutex_init(&st->time_t, NULL);
 	st->someone_died = -1;
 }
@@ -96,8 +95,15 @@ void	ft_create_mutex(t_args *st)
 void	ft_criate_philo(t_args *st)
 {
 	t_philo	*philo;
+	int		i;
 
+	i = 0;
 	philo = malloc(sizeof(t_philo) * st->num_philos);
+	if (!philo)
+	{
+		perror("ERROR MEMORY\n");
+		return;
+	}
 	st->philo = philo;
-	ft_create(st, st->philo);
+	ft_create(st, st->philo, i);
 }

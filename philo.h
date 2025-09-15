@@ -36,7 +36,7 @@ typedef struct s_args
 	long			time;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print_mutex;
-	pthread_mutex_t	death_mutex;
+	pthread_mutex_t	deat;
 	pthread_mutex_t	time_t;
 	pthread_t		monitor;
 	t_philo			*philo;
@@ -52,7 +52,7 @@ void	ft_free_arr(int **arr);
 
 //ft_create_philo.c
 void	*ft_monitor(void *arg);
-void	ft_create(t_args *st, t_philo *s_philo);
+void	ft_create(t_args *st, t_philo *s_philo, int i);
 void	ft_setupe_fork_p(t_args *st, t_philo *philo_);
 void	ft_criate_philo(t_args *st);
 void	ft_create_mutex(t_args *st);
@@ -74,13 +74,16 @@ void	*my_thread_function(void *arg);
 int		ft_get_fork(t_philo *philo, int id);
 void	ft_eat(t_args *st, int left, int rigth, int id);
 void	ft_sleep(t_args *st, int id);
-void	ft_think(t_args *st, int id);
+void	ft_think(t_args *st, int id, long time);
 //time.c
 
 void	ft_get_my_time(t_time_p *t);
 void	ft_time_start(t_args *st);
-void	ft_daid(pthread_mutex_t *l, int id);
+void	ft_daid(pthread_mutex_t *l, int id, long time);
 long	ft_timestamp(t_time_p *start);
+
+///ft_utilc.c
+int		ft_c_d(pthread_mutex_t	*d, int check);
 /*
 ◦ timestamp_in_ms X has taken a fork
 ◦ timestamp_in_ms X is eating

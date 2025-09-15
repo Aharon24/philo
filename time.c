@@ -11,13 +11,14 @@ long	ft_timestamp(t_time_p *start)
 	return (ms);
 }
 
-void	ft_daid(pthread_mutex_t *l, int id)
+void	ft_daid(pthread_mutex_t *l, int id, long time)
 {
 	pthread_mutex_lock(l);
-	printf("%d diedn\n", id);
+	printf("%ld %d diedn\n", time, id);
 	pthread_mutex_unlock(l);
 }
 
+ 
 void	ft_get_my_time(t_time_p *t)
 {
 	struct timeval	tv;
