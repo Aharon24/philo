@@ -1,13 +1,18 @@
 #include "philo.h"
 
-void ft_think(t_args *st, int id, long time)
+void ft_think(t_args *st, int id)
 {
+	long	now;
+	long	end;
 	if (ft_c_d(&st->deat, st->someone_died) == 1)
 		return ;
+	ft_get_my_time(&st->philo[id].t_start);
+	now = ft_timestamp(&st->philo[id].t_start);
     pthread_mutex_lock(&st->print_mutex);
-    printf("%ld %d is thinking\n", time, id + 1);
+    printf("%ld %d is thinking\n", now, id + 1);
     pthread_mutex_unlock(&st->print_mutex);
-
+	end = ft_timestamp(&st->philo[id].t_start);
+	st->time += end - now;
 }
 
 void	ft_sleep(t_args *st, int id)
@@ -101,7 +106,7 @@ void	*my_thread_function(void *arg)
 			return (NULL);
 		ft_get_fork(philo, philo->id);
 		ft_sleep(philo->st, philo->id);
-		ft_think(philo->st, philo->id, philo->st->time);
+		ft_think(philo->st, philo->id);
 	}
 	return (NULL);
 }

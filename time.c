@@ -18,3 +18,12 @@ void	ft_daid(pthread_mutex_t *l, int id, long time)
 	pthread_mutex_unlock(l);
 }
 
+void	ft_get_my_time(t_time_p *t)
+{
+	struct timeval	tv;
+
+	gettimeofday(&tv, NULL);
+	t->tv_sec = tv.tv_sec;
+	t->tv_usec = tv.tv_usec;
+}
+

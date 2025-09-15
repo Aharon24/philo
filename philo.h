@@ -74,7 +74,7 @@ void	*my_thread_function(void *arg);
 int		ft_get_fork(t_philo *philo, int id);
 void	ft_eat(t_args *st, int left, int rigth, int id);
 void	ft_sleep(t_args *st, int id);
-void	ft_think(t_args *st, int id, long time);
+void	ft_think(t_args *st, int id);
 //time.c
 
 void	ft_get_my_time(t_time_p *t);
