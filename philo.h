@@ -21,6 +21,10 @@ typedef struct s_philo
 	int				right_fork;
 	long			last_meal;
 	pthread_t		threads;
+	t_time_p		t_start;
+	long			l_start;
+	long			l_end;
+	long			l_now;
 	struct s_args	*st;
 
 }	t_philo;
@@ -40,10 +44,6 @@ typedef struct s_args
 	pthread_mutex_t	time_t;
 	pthread_t		monitor;
 	t_philo			*philo;
-	t_time_p		t_start;
-	t_time_p		t_end;
-	t_time_p		t_now;
-	long			tt;
 }	t_args;
 
 //ft_free.c
@@ -91,3 +91,19 @@ int		ft_c_d(pthread_mutex_t	*d, int check);
 ◦ timestamp_in_ms X is thinking
 ◦ timestamp_in_ms X died
 */
+
+
+// void	ft_think(t_args *st,int id)
+// {
+// 	if (ft_c_d(&st->deat, st->someone_died) == 1)
+// 		return ;
+// 	pthread_mutex_lock(&st->deat);
+// 	if (st->someone_died == -1)
+// 	{
+// 		pthread_mutex_lock(&st->print_mutex);
+// 		printf("%ld %d is thinking\n",
+// 			st->time += ft_timestamp(&st->t_start), id);
+// 		pthread_mutex_unlock(&st->print_mutex);
+// 	}
+// 	pthread_mutex_unlock(&st->deat);
+// }

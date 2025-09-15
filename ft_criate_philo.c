@@ -16,7 +16,7 @@ void	*ft_monitor(void *arg)
 			{
 				pthread_mutex_lock(&st->time_t);
 				pthread_mutex_unlock(&st->deat);
-				ft_daid(&st->print_mutex, i + 1,ft_timestamp(&st->t_now));
+				ft_daid(&st->print_mutex, i + 1, st->time);
 				pthread_mutex_unlock(&st->time_t);
 				return (NULL);
 			}
