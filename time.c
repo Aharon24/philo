@@ -1,13 +1,14 @@
 #include "philo.h"
 
 
-void ft_time(t_args *st, t_philo *philo)
+void ft_time(t_args *st, int id)
 {
 	long now;
 
 	now = ft_timestamp(&st->time_clock);
 	st->time = now - st->old_time;
-	philo->last_meal = ft_timestamp(&st->time_clock) - now;
+	if (now - st->philo[id].last_meal > st->time_to_die)
+		st->someone_died = 1;
 }
 
 

@@ -40,6 +40,7 @@ void	ft_setupe_fork_p(t_args *st, t_philo *philo_)
 		philo_[i].right_fork = (i + 1) % n;
 		i++;
 	}
+	st->time = 0;
 	st->old_time = ft_timestamp(&st->time_clock);
 }
 
@@ -107,4 +108,5 @@ void	ft_criate_philo(t_args *st)
 	}
 	st->philo = philo;
 	ft_create(st, st->philo, i);
+	//free(philo);
 }

@@ -80,10 +80,13 @@ void	ft_get_my_time(t_time_p *t);
 void	ft_time_start(t_args *st);
 void	ft_daid(pthread_mutex_t *l, int id, long time);
 long	ft_timestamp(t_time_p *start);
-void	ft_time(t_args *st, t_philo *philo);
+void	ft_time(t_args *st,int id);
 
 ///ft_utilc.c
 int		ft_c_d(pthread_mutex_t	*d, int check);
+void	ft_unlock(pthread_mutex_t *l , pthread_mutex_t *r, pthread_mutex_t *d);
+void	ft_check_death(t_args *st, int id);
+void	ft_update(t_args *st,  int id);
 /*
 ◦ timestamp_in_ms X has taken a fork
 ◦ timestamp_in_ms X is eating
