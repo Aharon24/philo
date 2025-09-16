@@ -1,5 +1,16 @@
 #include "philo.h"
 
+
+void ft_time(t_args *st, t_philo *philo)
+{
+	long now;
+
+	now = ft_timestamp(&st->time_clock);
+	st->time = now - st->old_time;
+	philo->last_meal = ft_timestamp(&st->time_clock) - now;
+}
+
+
 long	ft_timestamp(t_time_p *start)
 {
 	struct timeval	current;

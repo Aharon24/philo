@@ -22,9 +22,6 @@ typedef struct s_philo
 	long			last_meal;
 	pthread_t		threads;
 	t_time_p		t_start;
-	long			l_start;
-	long			l_end;
-	long			l_now;
 	struct s_args	*st;
 
 }	t_philo;
@@ -38,11 +35,13 @@ typedef struct s_args
 	int				must_eat;
 	int				someone_died;
 	long			time;
+	long			old_time;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	deat;
 	pthread_mutex_t	time_t;
 	pthread_t		monitor;
+	t_time_p		time_clock;
 	t_philo			*philo;
 }	t_args;
 
@@ -74,13 +73,14 @@ void	*my_thread_function(void *arg);
 int		ft_get_fork(t_philo *philo, int id);
 void	ft_eat(t_args *st, int left, int rigth, int id);
 void	ft_sleep(t_args *st, int id);
-void	ft_think(t_args *st, int id);
+void	ft_think(t_args *st, int ids);
 //time.c
 
 void	ft_get_my_time(t_time_p *t);
 void	ft_time_start(t_args *st);
 void	ft_daid(pthread_mutex_t *l, int id, long time);
 long	ft_timestamp(t_time_p *start);
+void	ft_time(t_args *st, t_philo *philo);
 
 ///ft_utilc.c
 int		ft_c_d(pthread_mutex_t	*d, int check);

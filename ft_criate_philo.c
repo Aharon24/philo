@@ -40,6 +40,7 @@ void	ft_setupe_fork_p(t_args *st, t_philo *philo_)
 		philo_[i].right_fork = (i + 1) % n;
 		i++;
 	}
+	st->old_time = ft_timestamp(&st->time_clock);
 }
 
 void	ft_create(t_args *st, t_philo *philo, int i)
@@ -49,7 +50,7 @@ void	ft_create(t_args *st, t_philo *philo, int i)
 	{
 		philo[i].st = st;
 		philo[i].id = i;
-		philo[i].last_meal = 0;
+		philo[i].last_meal =  ft_timestamp(&philo[i].t_start);
 		i++;
 	}
 	i = 0;
