@@ -16,13 +16,14 @@ void	*ft_monitor(void *arg)
 			{
 				pthread_mutex_lock(&st->time_t);
 				pthread_mutex_unlock(&st->deat);
-				ft_daid(&st->print_mutex, i + 1, st->time);
+				ft_daid(&st->print_mutex, i + 1, ft_timestamp(&st->start));
 				pthread_mutex_unlock(&st->time_t);
 				return (NULL);
 			}
 			pthread_mutex_unlock(&st->deat);
 			i++;
 		}
+		usleep(500);
 	}
 	return (NULL);
 }
@@ -40,18 +41,17 @@ void	ft_setupe_fork_p(t_args *st, t_philo *philo_)
 		philo_[i].right_fork = (i + 1) % n;
 		i++;
 	}
-	st->time = 0;
-	st->old_time = ft_timestamp(&st->time_clock);
 }
 
 void	ft_create(t_args *st, t_philo *philo, int i)
 {
 	ft_setupe_fork_p(st, st->philo);
+	i = 0;
 	while (i < st->num_philos)
 	{
 		philo[i].st = st;
 		philo[i].id = i;
-		philo[i].last_meal =  ft_timestamp(&philo[i].t_start);
+		philo[i].last_meal = ft_timestamp(&st->start);
 		i++;
 	}
 	i = 0;
@@ -76,6 +76,7 @@ void	ft_create_mutex(t_args *st)
 {
 	int	i;
 
+	gettimeofday(&st->start, NULL);
 	st->forks = malloc(sizeof(pthread_mutex_t) * st->num_philos);
 	if (!st->forks)
 	{
@@ -104,9 +105,8 @@ void	ft_criate_philo(t_args *st)
 	if (!philo)
 	{
 		perror("ERROR MEMORY\n");
-		return;
+		return ;
 	}
 	st->philo = philo;
 	ft_create(st, st->philo, i);
-	//free(philo);
 }

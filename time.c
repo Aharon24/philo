@@ -1,18 +1,15 @@
 #include "philo.h"
 
-
-void ft_time(t_args *st, int id)
+void	ft_time(t_args *st, int id)
 {
-	long now;
+	long	now;
 
-	now = ft_timestamp(&st->time_clock);
-	st->time = now - st->old_time;
+	now = ft_timestamp(&st->start);
 	if (now - st->philo[id].last_meal > st->time_to_die)
 		st->someone_died = 1;
 }
 
-
-long	ft_timestamp(t_time_p *start)
+long	ft_timestamp(struct timeval *start)
 {
 	struct timeval	current;
 	long			ms;
@@ -38,4 +35,3 @@ void	ft_get_my_time(t_time_p *t)
 	t->tv_sec = tv.tv_sec;
 	t->tv_usec = tv.tv_usec;
 }
-

@@ -21,7 +21,6 @@ typedef struct s_philo
 	int				right_fork;
 	long			last_meal;
 	pthread_t		threads;
-	t_time_p		t_start;
 	struct s_args	*st;
 
 }	t_philo;
@@ -34,14 +33,12 @@ typedef struct s_args
 	int				time_to_sleep;
 	int				must_eat;
 	int				someone_died;
-	long			time;
-	long			old_time;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	deat;
 	pthread_mutex_t	time_t;
 	pthread_t		monitor;
-	t_time_p		time_clock;
+	struct timeval	start;
 	t_philo			*philo;
 }	t_args;
 
@@ -79,14 +76,14 @@ void	ft_think(t_args *st, int ids);
 void	ft_get_my_time(t_time_p *t);
 void	ft_time_start(t_args *st);
 void	ft_daid(pthread_mutex_t *l, int id, long time);
-long	ft_timestamp(t_time_p *start);
-void	ft_time(t_args *st,int id);
+long	ft_timestamp(struct timeval *start);
+void	ft_time(t_args *st, int id);
 
 ///ft_utilc.c
 int		ft_c_d(pthread_mutex_t	*d, int check);
-void	ft_unlock(pthread_mutex_t *l , pthread_mutex_t *r, pthread_mutex_t *d);
+void	ft_unlock(pthread_mutex_t *l, pthread_mutex_t *r, pthread_mutex_t *d);
 void	ft_check_death(t_args *st, int id);
-void	ft_update(t_args *st,  int id);
+void	ft_update(t_args *st, int id);
 /*
 ◦ timestamp_in_ms X has taken a fork
 ◦ timestamp_in_ms X is eating
@@ -94,7 +91,6 @@ void	ft_update(t_args *st,  int id);
 ◦ timestamp_in_ms X is thinking
 ◦ timestamp_in_ms X died
 */
-
 
 // void	ft_think(t_args *st,int id)
 // {
