@@ -20,6 +20,7 @@ typedef struct s_philo
 	int				left_fork;
 	int				right_fork;
 	long			last_meal;
+	int				eat_count;
 	pthread_t		threads;
 	struct s_args	*st;
 
@@ -39,6 +40,7 @@ typedef struct s_args
 	pthread_mutex_t	time_t;
 	pthread_t		monitor;
 	struct timeval	start;
+	int				ac;
 	t_philo			*philo;
 }	t_args;
 
@@ -80,7 +82,7 @@ long	ft_timestamp(struct timeval *start);
 void	ft_time(t_args *st, int id);
 
 ///ft_utilc.c
-int		ft_c_d(pthread_mutex_t	*d, int check);
+int		ft_c_d(pthread_mutex_t	*d, int check, t_philo *philo);
 void	ft_unlock(pthread_mutex_t *l, pthread_mutex_t *r, pthread_mutex_t *d);
 void	ft_check_death(t_args *st, int id);
 void	ft_update(t_args *st, int id);

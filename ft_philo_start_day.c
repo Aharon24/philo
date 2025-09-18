@@ -2,27 +2,29 @@
 
 void	ft_think(t_args *st, int id)
 {
-	if (ft_c_d(&st->deat, st->someone_died) == 1)
+	if (ft_c_d(&st->deat, st->someone_died,&st->philo[id]) == 1)
 		return ;
 	pthread_mutex_lock(&st->print_mutex);
 	printf("%ld %d is thinking\n", ft_timestamp(&st->start), id + 1);
 	pthread_mutex_unlock(&st->print_mutex);
+	if (ft_c_d(&st->deat, st->someone_died,&st->philo[id]) == 1)
+		return ;
 }
 
 void	ft_sleep(t_args *st, int id)
 {
-	if (ft_c_d(&st->deat, st->someone_died) == 1)
+	if (ft_c_d(&st->deat, st->someone_died,&st->philo[id]) == 1)
 		return ;
 	ft_print_all(st, ft_timestamp(&st->start), id, 3);
 	usleep(1000 * st->time_to_sleep);
 	ft_time(st, id);
-	if (ft_c_d(&st->deat, st->someone_died) == 1)
+	if (ft_c_d(&st->deat, st->someone_died,&st->philo[id]) == 1)
 		return ;
 }
 
 void	ft_eat(t_args *st, int left, int rigth, int id)
 {
-	if (ft_c_d(&st->deat, st->someone_died) == 1)
+	if (ft_c_d(&st->deat, st->someone_died, &st->philo[id]) == 1)
 		return ;
 	pthread_mutex_lock(&st->forks[left]);
 	ft_print_all(st, ft_timestamp(&st->start), id, 1);
@@ -51,7 +53,7 @@ void	ft_eat(t_args *st, int left, int rigth, int id)
 
 int	ft_get_fork(t_philo *philo, int id)
 {
-	if (ft_c_d(&philo->st->deat, philo->st->someone_died) == 1)
+	if (ft_c_d(&philo->st->deat, philo->st->someone_died,philo) == 1)
 		return (3);
 	if (id % 2 != 0)
 	{
@@ -71,13 +73,13 @@ void	*my_thread_function(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	if (ft_c_d(&philo->st->deat, philo->st->someone_died) == 1)
+	if (ft_c_d(&philo->st->deat, philo->st->someone_died,philo) == 1)
 		return (NULL);
 	if (philo->id % 2 == 0)
 		usleep(500);
 	while (1)
 	{
-		if (ft_c_d(&philo->st->deat, philo->st->someone_died) == 1)
+		if (ft_c_d(&philo->st->deat, philo->st->someone_died,philo) == 1)
 			return (NULL);
 		ft_get_fork(philo, philo->id);
 		ft_sleep(philo->st, philo->id);

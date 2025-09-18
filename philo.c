@@ -44,6 +44,7 @@ void	ft_philo(int ac, char **argv)
 	{
 		if (ft_argc_six(st, argv))
 			return ;
+		st->ac = 1;
 	}
 	else
 		st->must_eat = -1;

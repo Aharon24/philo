@@ -1,12 +1,21 @@
 #include "philo.h"
 
-int	ft_c_d(pthread_mutex_t	*d, int check)
+int	ft_c_d(pthread_mutex_t	*d, int check, t_philo *philo)
 {
 	pthread_mutex_lock(d);
 	if (check != -1)
 	{
 		pthread_mutex_unlock(d);
 		return (1);
+	}
+	if(philo->st->must_eat != -1)
+	{
+		if(philo->eat_count == 0)
+		{
+			philo->st->someone_died = 1;
+			pthread_mutex_unlock(d);
+			return (1);
+		}
 	}
 	pthread_mutex_unlock(d);
 	return (0);

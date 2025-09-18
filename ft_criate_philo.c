@@ -15,9 +15,9 @@ void	*ft_monitor(void *arg)
 			if (st->someone_died != -1)
 			{
 				pthread_mutex_lock(&st->time_t);
-				pthread_mutex_unlock(&st->deat);
 				ft_daid(&st->print_mutex, i + 1, ft_timestamp(&st->start));
 				pthread_mutex_unlock(&st->time_t);
+				pthread_mutex_unlock(&st->deat);
 				return (NULL);
 			}
 			pthread_mutex_unlock(&st->deat);
@@ -52,6 +52,8 @@ void	ft_create(t_args *st, t_philo *philo, int i)
 		philo[i].st = st;
 		philo[i].id = i;
 		philo[i].last_meal = ft_timestamp(&st->start);
+		if (st->ac == 1)
+				philo[i].eat_count = st->must_eat;
 		i++;
 	}
 	i = 0;
