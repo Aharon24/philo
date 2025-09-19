@@ -18,6 +18,7 @@ void	*ft_monitor(void *arg)
 				ft_daid(&st->print_mutex, i + 1, ft_timestamp(&st->start));
 				pthread_mutex_unlock(&st->time_t);
 				pthread_mutex_unlock(&st->deat);
+				st->free = 1;
 				return (NULL);
 			}
 			pthread_mutex_unlock(&st->deat);
@@ -41,21 +42,22 @@ void	ft_setupe_fork_p(t_args *st, t_philo *philo_)
 		philo_[i].right_fork = (i + 1) % n;
 		i++;
 	}
+	i = 0;
+	while (i < st->num_philos)
+	{
+		philo_[i].eat_count = 0;
+		philo_[i].st = st;
+		philo_[i].id = i;
+		philo_[i].last_meal = ft_timestamp(&st->start);
+		if (st->ac == 1)
+			philo_[i].eat_count = st->must_eat;
+		i++;
+	}
 }
 
 void	ft_create(t_args *st, t_philo *philo, int i)
 {
 	ft_setupe_fork_p(st, st->philo);
-	i = 0;
-	while (i < st->num_philos)
-	{
-		philo[i].st = st;
-		philo[i].id = i;
-		philo[i].last_meal = ft_timestamp(&st->start);
-		if (st->ac == 1)
-				philo[i].eat_count = st->must_eat;
-		i++;
-	}
 	i = 0;
 	while (i < st->num_philos)
 	{
@@ -110,5 +112,8 @@ void	ft_criate_philo(t_args *st)
 		return ;
 	}
 	st->philo = philo;
+	st->ac = 0;
 	ft_create(st, st->philo, i);
+	if (st->free == 1)
+		free(philo);
 }

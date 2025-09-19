@@ -40,6 +40,7 @@ typedef struct s_args
 	pthread_mutex_t	time_t;
 	pthread_t		monitor;
 	struct timeval	start;
+	int				free;
 	int				ac;
 	t_philo			*philo;
 }	t_args;
@@ -86,6 +87,7 @@ int		ft_c_d(pthread_mutex_t	*d, int check, t_philo *philo);
 void	ft_unlock(pthread_mutex_t *l, pthread_mutex_t *r, pthread_mutex_t *d);
 void	ft_check_death(t_args *st, int id);
 void	ft_update(t_args *st, int id);
+void	ft_simple_sleep(int ms, t_args *st);
 /*
 ◦ timestamp_in_ms X has taken a fork
 ◦ timestamp_in_ms X is eating

@@ -8,9 +8,9 @@ int	ft_c_d(pthread_mutex_t	*d, int check, t_philo *philo)
 		pthread_mutex_unlock(d);
 		return (1);
 	}
-	if(philo->st->must_eat != -1)
+	if (philo->st->must_eat != -1)
 	{
-		if(philo->eat_count == 0)
+		if (philo->eat_count == 0)
 		{
 			philo->st->someone_died = 1;
 			pthread_mutex_unlock(d);
@@ -49,3 +49,11 @@ void	ft_update(t_args *st, int id)
 	st->philo[id].last_meal = ft_timestamp(&st->start);
 	pthread_mutex_unlock(&st->deat);
 }
+
+void ft_simple_sleep(int ms , t_args *st)
+{
+    long start = ft_timestamp(&st->start); // функция возвращает миллисекунды с начала программы
+    while (ft_timestamp(&st->start) - start < ms)
+        usleep(100); // короткая пауза, чтобы не жрать CPU
+}
+
