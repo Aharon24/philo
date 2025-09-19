@@ -50,10 +50,11 @@ void	ft_update(t_args *st, int id)
 	pthread_mutex_unlock(&st->deat);
 }
 
-void ft_simple_sleep(int ms , t_args *st)
+void	ft_simple_sleep(int ms, t_args *st)
 {
-    long start = ft_timestamp(&st->start); // функция возвращает миллисекунды с начала программы
-    while (ft_timestamp(&st->start) - start < ms)
-        usleep(100); // короткая пауза, чтобы не жрать CPU
-}
+	long	start;
 
+	start = ft_timestamp(&st->start);
+	while (ft_timestamp(&st->start) - start < ms)
+		usleep(100);
+}

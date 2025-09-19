@@ -16,7 +16,7 @@ void	ft_sleep(t_args *st, int id)
 	if (ft_c_d(&st->deat, st->someone_died, &st->philo[id]) == 1)
 		return ;
 	ft_print_all(st, ft_timestamp(&st->start), id, 3);
-	ft_simple_sleep(st->time_to_sleep,st);
+	ft_simple_sleep(st->time_to_sleep, st);
 	//usleep(1000 * st->time_to_sleep);
 	ft_time(st, id);
 	if (ft_c_d(&st->deat, st->someone_died, &st->philo[id]) == 1)
@@ -43,8 +43,7 @@ void	ft_eat(t_args *st, int left, int rigth, int id)
 	ft_print_all(st, ft_timestamp(&st->start), id, 2);
 	ft_update(st, id);
 	ft_check_death(st, id);
-
-	 ft_simple_sleep(st->time_to_eat,st);
+	ft_simple_sleep(st->time_to_eat, st);
 //	usleep(1000 * st->time_to_eat);
 	pthread_mutex_lock(&st->deat);
 	if (st->someone_died != -1)
