@@ -37,6 +37,7 @@ typedef struct s_args
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	deat;
+	pthread_mutex_t	meal_m;
 	pthread_mutex_t	time_t;
 	pthread_t		monitor;
 	struct timeval	start;
@@ -78,7 +79,7 @@ void	ft_think(t_args *st, int ids);
 
 void	ft_get_my_time(t_time_p *t);
 void	ft_time_start(t_args *st);
-void	ft_daid(pthread_mutex_t *l, int id, long time);
+void	ft_daid(pthread_mutex_t *l, int id, long time, t_args *st);
 long	ft_timestamp(struct timeval *start);
 void	ft_time(t_args *st, int id);
 
@@ -88,6 +89,14 @@ void	ft_unlock(pthread_mutex_t *l, pthread_mutex_t *r, pthread_mutex_t *d);
 void	ft_check_death(t_args *st, int id);
 void	ft_update(t_args *st, int id);
 void	ft_simple_sleep(int ms, t_args *st);
+
+/// ft_utils_tow.c
+int		ft_chek_think(t_args *st, int check);
+int		ft_diper_one(t_args *st, int id, long time);
+int		ft_diper_two(t_args *st, int id, long time);
+int		ft_diper_three(t_args *st, int id, long time);
+int		ft_diper_four(t_args *st, int id , long time);
+
 /*
 ◦ timestamp_in_ms X has taken a fork
 ◦ timestamp_in_ms X is eating
@@ -96,17 +105,3 @@ void	ft_simple_sleep(int ms, t_args *st);
 ◦ timestamp_in_ms X died
 */
 
-// void	ft_think(t_args *st,int id)
-// {
-// 	if (ft_c_d(&st->deat, st->someone_died) == 1)
-// 		return ;
-// 	pthread_mutex_lock(&st->deat);
-// 	if (st->someone_died == -1)
-// 	{
-// 		pthread_mutex_lock(&st->print_mutex);
-// 		printf("%ld %d is thinking\n",
-// 			st->time += ft_timestamp(&st->t_start), id);
-// 		pthread_mutex_unlock(&st->print_mutex);
-// 	}
-// 	pthread_mutex_unlock(&st->deat);
-// }

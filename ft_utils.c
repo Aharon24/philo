@@ -8,12 +8,17 @@ int	ft_c_d(pthread_mutex_t	*d, int check, t_philo *philo)
 		pthread_mutex_unlock(d);
 		return (1);
 	}
+	pthread_mutex_unlock(d);
+	pthread_mutex_lock(d);
 	if (philo->st->must_eat != -1)
-	{
+	{ 
+
 		if (philo->eat_count == 0)
 		{
-			philo->st->someone_died = 1;
 			pthread_mutex_unlock(d);
+			pthread_mutex_lock(&philo->st->meal_m);
+			philo->st->someone_died = 1;
+			pthread_mutex_unlock(&philo->st->meal_m);
 			return (1);
 		}
 	}
@@ -37,8 +42,11 @@ void	ft_check_death(t_args *st, int id)
 	if (now - st->philo[id].last_meal
 		> st->time_to_die && st->someone_died == -1)
 	{
+
 		st->someone_died = id;
+		pthread_mutex_lock(&st->print_mutex);
 		printf("%ld %d died\n", now, id);
+		pthread_mutex_unlock(&st->print_mutex);
 	}
 	pthread_mutex_unlock(&st->deat);
 }
@@ -50,11 +58,20 @@ void	ft_update(t_args *st, int id)
 	pthread_mutex_unlock(&st->deat);
 }
 
-void	ft_simple_sleep(int ms, t_args *st)
+void ft_simple_sleep(int ms, t_args *st)
 {
-	long	start;
+    long start = ft_timestamp(&st->start);
 
-	start = ft_timestamp(&st->start);
-	while (ft_timestamp(&st->start) - start < ms)
-		usleep(100);
+    while (ft_timestamp(&st->start) - start < ms)
+    {
+        // pthread_mutex_lock(&st->deat);
+        // int died = st->someone_died;
+        // pthread_mutex_unlock(&st->deat);
+
+        // if (died)
+        //     break;
+
+        usleep(100);
+    }
 }
+

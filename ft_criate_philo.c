@@ -14,10 +14,10 @@ void	*ft_monitor(void *arg)
 			pthread_mutex_lock(&st->deat);
 			if (st->someone_died != -1)
 			{
-				pthread_mutex_lock(&st->time_t);
-				ft_daid(&st->print_mutex, i + 1, ft_timestamp(&st->start));
-				pthread_mutex_unlock(&st->time_t);
 				pthread_mutex_unlock(&st->deat);
+				pthread_mutex_lock(&st->time_t);
+				ft_daid(&st->print_mutex, i + 1, ft_timestamp(&st->start),st);
+				pthread_mutex_unlock(&st->time_t);
 				st->free = 1;
 				return (NULL);
 			}
@@ -96,6 +96,8 @@ void	ft_create_mutex(t_args *st)
 	pthread_mutex_init(&st->print_mutex, NULL);
 	pthread_mutex_init(&st->deat, NULL);
 	pthread_mutex_init(&st->time_t, NULL);
+	pthread_mutex_init(&st->meal_m, NULL);
+
 	st->someone_died = -1;
 }
 
@@ -112,7 +114,6 @@ void	ft_criate_philo(t_args *st)
 		return ;
 	}
 	st->philo = philo;
-	st->ac = 0;
 	ft_create(st, st->philo, i);
 	if (st->free == 1)
 		free(philo);

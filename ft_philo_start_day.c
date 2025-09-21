@@ -2,11 +2,10 @@
 
 void	ft_think(t_args *st, int id)
 {
+
 	if (ft_c_d(&st->deat, st->someone_died, &st->philo[id]) == 1)
 		return ;
-	pthread_mutex_lock(&st->print_mutex);
-	printf("%ld %d is thinking\n", ft_timestamp(&st->start), id + 1);
-	pthread_mutex_unlock(&st->print_mutex);
+	ft_print_all(st,ft_timestamp(&st->start),id,4);
 	if (ft_c_d(&st->deat, st->someone_died, &st->philo[id]) == 1)
 		return ;
 }
@@ -17,7 +16,6 @@ void	ft_sleep(t_args *st, int id)
 		return ;
 	ft_print_all(st, ft_timestamp(&st->start), id, 3);
 	ft_simple_sleep(st->time_to_sleep, st);
-	//usleep(1000 * st->time_to_sleep);
 	ft_time(st, id);
 	if (ft_c_d(&st->deat, st->someone_died, &st->philo[id]) == 1)
 		return ;
@@ -29,14 +27,15 @@ void	ft_eat(t_args *st, int left, int rigth, int id)
 		return ;
 	pthread_mutex_lock(&st->forks[left]);
 	ft_print_all(st, ft_timestamp(&st->start), id, 1);
-	if (st->num_philos == 1 || st->time_to_die < st->time_to_eat)
+	if (st->num_philos == 1 || st->time_to_die < st->time_to_eat || st->someone_died == 1)
 	{
-		//ft_simple_sleep(1,st);
-		//usleep(st->time_to_die * 100);
+		usleep(st->time_to_die);
 		st->someone_died = 1;
 		pthread_mutex_unlock(&st->forks[left]);
 		return ;
 	}
+	if (ft_chek_think(st,st->someone_died ) == 1)
+		return ;
 	pthread_mutex_lock(&st->forks[rigth]);
 	ft_print_all(st, ft_timestamp(&st->start), id, 1);
 	ft_time(st, id);
@@ -44,13 +43,15 @@ void	ft_eat(t_args *st, int left, int rigth, int id)
 	ft_update(st, id);
 	ft_check_death(st, id);
 	ft_simple_sleep(st->time_to_eat, st);
-//	usleep(1000 * st->time_to_eat);
 	pthread_mutex_lock(&st->deat);
 	if (st->someone_died != -1)
 	{
 		ft_unlock(&st->forks[left], &st->forks[rigth], &st->deat);
 		return ;
 	}
+	pthread_mutex_lock(&st->meal_m);
+	st->philo[id].eat_count--;
+	pthread_mutex_unlock(&st->meal_m);
 	ft_unlock(&st->forks[left], &st->forks[rigth], &st->deat);
 }
 

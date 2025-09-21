@@ -40,6 +40,7 @@ void	ft_philo(int ac, char **argv)
 	st->time_to_die = ft_atoi(argv[2]);
 	st->time_to_eat = ft_atoi(argv[3]);
 	st->time_to_sleep = ft_atoi(argv[4]);
+	st->ac = 0;
 	if (ac == 6)
 	{
 		if (ft_argc_six(st, argv))
