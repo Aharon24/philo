@@ -8,9 +8,11 @@ void	ft_time(t_args *st, int id)
 	now = ft_timestamp(&st->start);
 	if (now - st->philo[id].last_meal > st->time_to_die)
 	{
+		pthread_mutex_unlock(&st->time_t);
 		pthread_mutex_lock(&st->deat);
 		st->someone_died = 1;
 		pthread_mutex_unlock(&st->deat);
+		return ;
 	}
 	pthread_mutex_unlock(&st->time_t);
 }
@@ -35,17 +37,24 @@ void	ft_daid(pthread_mutex_t *l, int id, long time, t_args *st)
 		return ;
 	}
 	pthread_mutex_unlock(l);
-
 	pthread_mutex_lock(l);
 	printf("%ld %d diedn\n", time, id);
 	pthread_mutex_unlock(l);
 }
 
-void	ft_get_my_time(t_time_p *t)
+int	get_someone_died(t_args *st)
 {
-	struct timeval	tv;
+	int	val;
 
-	gettimeofday(&tv, NULL);
-	t->tv_sec = tv.tv_sec;
-	t->tv_usec = tv.tv_usec;
+	pthread_mutex_lock(&st->deat);
+	val = st->someone_died;
+	pthread_mutex_unlock(&st->deat);
+	return (val);
+}
+
+void	set_someone_died(t_args *st, int id)
+{
+	pthread_mutex_lock(&st->deat);
+	st->someone_died = id;
+	pthread_mutex_unlock(&st->deat);
 }

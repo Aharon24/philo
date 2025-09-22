@@ -1,10 +1,13 @@
-#include <stdio.h>        // printf
-#include <stdlib.h>       // malloc, free
-#include <string.h>       // memset
-#include <unistd.h>       // usleep, write
-#include <sys/time.h>     // gettimeofday
-#include <pthread.h>      // потоки и мьютексы
-#include <stdio.h>
+#ifndef PHILO_H
+# define PHILO_H
+
+# include <stdio.h>        // printf
+# include <stdlib.h>       // malloc, free
+# include <string.h>       // memset
+# include <unistd.h>       // usleep, write
+# include <sys/time.h>     // gettimeofday
+# include <pthread.h>      // потоки и мьютексы
+# include <stdio.h>
 
 struct	s_args;
 
@@ -47,7 +50,7 @@ typedef struct s_args
 }	t_args;
 
 //ft_free.c
-void	ft_free_and_end(t_args *st);
+void	ft_free_and_end(t_args *st, int c);
 void	ft_free_arr(int **arr);
 
 //ft_create_philo.c
@@ -77,26 +80,27 @@ void	ft_sleep(t_args *st, int id);
 void	ft_think(t_args *st, int ids);
 //time.c
 
-void	ft_get_my_time(t_time_p *t);
-void	ft_time_start(t_args *st);
+int		get_someone_died(t_args *st);
+void	set_someone_died(t_args *st, int id);
 void	ft_daid(pthread_mutex_t *l, int id, long time, t_args *st);
 long	ft_timestamp(struct timeval *start);
 void	ft_time(t_args *st, int id);
 
 ///ft_utilc.c
 int		ft_c_d(pthread_mutex_t	*d, int check, t_philo *philo);
-void	ft_unlock(pthread_mutex_t *l, pthread_mutex_t *r, pthread_mutex_t *d);
+void	ft_unlock(pthread_mutex_t *l, pthread_mutex_t *r);
 void	ft_check_death(t_args *st, int id);
 void	ft_update(t_args *st, int id);
 void	ft_simple_sleep(int ms, t_args *st);
+int		chek_eat_count(t_args *st);
 
 /// ft_utils_tow.c
-int		ft_chek_think(t_args *st, int check);
-int		ft_diper_one(t_args *st, int id, long time);
-int		ft_diper_two(t_args *st, int id, long time);
-int		ft_diper_three(t_args *st, int id, long time);
-int		ft_diper_four(t_args *st, int id , long time);
 
+int		ft_chek_think(t_args *st);
+void	ft_iiiii(t_args *st, int left);
+void	ft_count(t_args *st, int id, int left, int rigth);
+void	ft_monitoring_two(t_args *st, int i);
+#endif
 /*
 ◦ timestamp_in_ms X has taken a fork
 ◦ timestamp_in_ms X is eating
@@ -104,4 +108,3 @@ int		ft_diper_four(t_args *st, int id , long time);
 ◦ timestamp_in_ms X is thinking
 ◦ timestamp_in_ms X died
 */
-

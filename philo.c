@@ -6,7 +6,7 @@ int	ft_argc_six(t_args *st, char **argv)
 	if (st->must_eat == -1)
 	{
 		printf("ERROR\n");
-		ft_free_and_end(st);
+		ft_free_and_end(st, 0);
 		return (1);
 	}
 	else
@@ -54,7 +54,7 @@ void	ft_philo(int ac, char **argv)
 		ft_work_philo(st);
 	else
 		printf("ERROR\n");
-	ft_free_and_end(st);
+	ft_free_and_end(st, c);
 }
 
 int	main(int argc, char *argv[])

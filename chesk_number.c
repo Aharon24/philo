@@ -2,32 +2,30 @@
 
 void	ft_print_all(t_args *st, long time, int id, int action)
 {
-	if (ft_chek_think(st,st->someone_died ) == 1)
-		return ;	
 	pthread_mutex_lock(&st->print_mutex);
+	if (get_someone_died(st) != -1)
+	{
+		pthread_mutex_unlock(&st->print_mutex);
+		return ;
+	}
 	if (action == 1)
-	{	
-		if (ft_diper_one(st, id, time) == 1)
-			return ;
+	{
+		printf("%ld %d has taken a fork\n", time, id + 1);
 	}
 	else if (action == 2)
 	{
-		if (ft_diper_two(st, id, time) == 1)
-			return ;
+		printf("%ld %d is eating\n", time, id + 1);
 	}
 	else if (action == 3)
 	{
-		if (ft_diper_three(st, id, time) == 1)
-			return ;
+		printf("%ld %d is sleeping\n", time, id + 1);
 	}
 	else if (action == 4)
 	{
-		if (ft_diper_four(st, id, time) == 1)
-			return ;
+		printf("%ld %d is thinking\n", time, id + 1);
 	}
 	pthread_mutex_unlock(&st->print_mutex);
 }
-
 
 void	ft_print_fork(int i, t_philo *start, int phi_caunt)
 {

@@ -1,59 +1,54 @@
 #include "philo.h"
 
-int ft_chek_think(t_args *st, int check)
+int	ft_chek_think(t_args *st)
 {
-	pthread_mutex_lock(&st->deat);
-	if (check != -1)
-	{
-		pthread_mutex_unlock(&st->deat);
-		return (1);
-	}
-	pthread_mutex_unlock(&st->deat);
-	return (0);
-}
-	
-int ft_diper_one(t_args *st, int id, long time)
-{
-	if (ft_chek_think(st,st->someone_died) == 1)
-	{
-		pthread_mutex_unlock(&st->print_mutex);
-		return (1);
-	}	
-	printf("%ld %d has taken a fork\n", time, id + 1);
-	return (0);
+	return (get_someone_died(st) != -1);
 }
 
-int ft_diper_two(t_args *st, int id, long time)
+int	chek_eat_count(t_args *st)
 {
-	if (ft_chek_think(st,st->someone_died) == 1)
-	{
-		pthread_mutex_unlock(&st->print_mutex);
-		return (1);	
-	}
-	printf("%ld %d is eating\n", time, id + 1);
-	return (0);
-}
+	int	i;
 
-
-
-int ft_diper_three(t_args *st, int id, long time)
-{
-	if (ft_chek_think(st,st->someone_died) == 1)
-	{
-		pthread_mutex_unlock(&st->print_mutex);
-		return (1);	
-	}
-	printf("%ld %d is sleeping\n", time, id + 1);
-	return (0);
-}
-
-int ft_diper_four(t_args *st, int id , long time)
-{
-	if (ft_chek_think(st,st->someone_died) == 1)
-	{
-		pthread_mutex_unlock(&st->print_mutex);
-		return (1);	
-	}
-	printf("%ld %d is thinking\n", time, id + 1);
+	if (st->must_eat == -1)
 		return (0);
+	pthread_mutex_lock(&st->meal_m);
+	i = 0;
+	while (i < st->num_philos)
+	{
+		if (st->philo[i].eat_count != 0)
+		{
+			pthread_mutex_unlock(&st->meal_m);
+			return (0);
+		}
+		i++;
+	}
+	pthread_mutex_unlock(&st->meal_m);
+	set_someone_died(st, 2);
+	return (1);
+}
+
+void	ft_iiiii(t_args *st, int left)
+{
+	pthread_mutex_unlock(&st->forks[left]);
+	pthread_mutex_lock(&st->meal_m);
+	usleep(st->time_to_die);
+	set_someone_died(st, 1);
+	pthread_mutex_unlock(&st->meal_m);
+}
+
+void	ft_count(t_args *st, int id, int left, int rigth)
+{
+	pthread_mutex_lock(&st->meal_m);
+	if (st->philo[id].eat_count > 0)
+		st->philo[id].eat_count--;
+	pthread_mutex_unlock(&st->meal_m);
+	ft_unlock(&st->forks[left], &st->forks[rigth]);
+}
+
+void	ft_monitoring_two(t_args *st, int i)
+{
+	pthread_mutex_lock(&st->time_t);
+	ft_daid(&st->print_mutex, i + 1, ft_timestamp(&st->start), st);
+	st->free = 1;
+	pthread_mutex_unlock(&st->time_t);
 }

@@ -11,17 +11,16 @@ void	*ft_monitor(void *arg)
 		i = 0;
 		while (i < st->num_philos)
 		{
-			pthread_mutex_lock(&st->deat);
-			if (st->someone_died != -1)
+			if (st->num_philos > 1)
 			{
-				pthread_mutex_unlock(&st->deat);
-				pthread_mutex_lock(&st->time_t);
-				ft_daid(&st->print_mutex, i + 1, ft_timestamp(&st->start),st);
-				pthread_mutex_unlock(&st->time_t);
-				st->free = 1;
+				if (chek_eat_count(st) == 1)
+					return (NULL);
+			}
+			if (get_someone_died(st) == 1)
+			{
+				ft_monitoring_two(st, i);
 				return (NULL);
 			}
-			pthread_mutex_unlock(&st->deat);
 			i++;
 		}
 		usleep(500);
@@ -97,7 +96,6 @@ void	ft_create_mutex(t_args *st)
 	pthread_mutex_init(&st->deat, NULL);
 	pthread_mutex_init(&st->time_t, NULL);
 	pthread_mutex_init(&st->meal_m, NULL);
-
 	st->someone_died = -1;
 }
 
@@ -110,11 +108,9 @@ void	ft_criate_philo(t_args *st)
 	philo = malloc(sizeof(t_philo) * st->num_philos);
 	if (!philo)
 	{
-		perror("ERROR MEMORY\n");
+		printf("ERROR MEMORY\n");
 		return ;
 	}
 	st->philo = philo;
 	ft_create(st, st->philo, i);
-	if (st->free == 1)
-		free(philo);
 }
