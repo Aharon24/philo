@@ -1,6 +1,6 @@
 NAME    = philo
 CC      = cc
-CFLAGS  = -Wall -Wextra -Werror -g3 -pthread 
+CFLAGS  = -Wall -Wextra -Werror  -pthread 
 SRC     = philo.c chesk_number.c ft_criate_philo.c ft_free.c \
 			ft_philo_start_day.c  ft_utils.c  ft_utils_two.c\
 			time.c

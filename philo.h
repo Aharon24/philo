@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ahapetro <ahapetro@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/22 19:33:14 by ahapetro          #+#    #+#             */
+/*   Updated: 2025/09/22 19:33:14 by ahapetro         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PHILO_H
 # define PHILO_H
 
@@ -87,7 +99,7 @@ long	ft_timestamp(struct timeval *start);
 void	ft_time(t_args *st, int id);
 
 ///ft_utilc.c
-int		ft_c_d(pthread_mutex_t	*d, int check, t_philo *philo);
+int		ft_c_d(t_philo *philo);
 void	ft_unlock(pthread_mutex_t *l, pthread_mutex_t *r);
 void	ft_check_death(t_args *st, int id);
 void	ft_update(t_args *st, int id);

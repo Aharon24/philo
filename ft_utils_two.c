@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_utils_two.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ahapetro <ahapetro@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/22 19:32:52 by ahapetro          #+#    #+#             */
+/*   Updated: 2025/09/22 19:32:53 by ahapetro         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 int	ft_chek_think(t_args *st)
@@ -30,10 +42,10 @@ int	chek_eat_count(t_args *st)
 void	ft_iiiii(t_args *st, int left)
 {
 	pthread_mutex_unlock(&st->forks[left]);
-	pthread_mutex_lock(&st->meal_m);
-	usleep(st->time_to_die);
 	set_someone_died(st, 1);
-	pthread_mutex_unlock(&st->meal_m);
+	pthread_mutex_lock(&st->print_mutex);
+	usleep(st->time_to_die);
+	pthread_mutex_unlock(&st->print_mutex);
 }
 
 void	ft_count(t_args *st, int id, int left, int rigth)
@@ -47,8 +59,8 @@ void	ft_count(t_args *st, int id, int left, int rigth)
 
 void	ft_monitoring_two(t_args *st, int i)
 {
-	pthread_mutex_lock(&st->time_t);
-	ft_daid(&st->print_mutex, i + 1, ft_timestamp(&st->start), st);
+	pthread_mutex_lock(&st->print_mutex);
+	ft_daid(&st->deat, i + 1, ft_timestamp(&st->start), st);
 	st->free = 1;
-	pthread_mutex_unlock(&st->time_t);
+	pthread_mutex_unlock(&st->print_mutex);
 }

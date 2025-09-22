@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_criate_philo.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ahapetro <ahapetro@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/22 19:32:41 by ahapetro          #+#    #+#             */
+/*   Updated: 2025/09/22 19:32:41 by ahapetro         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 void	*ft_monitor(void *arg)
@@ -94,8 +106,8 @@ void	ft_create_mutex(t_args *st)
 	}
 	pthread_mutex_init(&st->print_mutex, NULL);
 	pthread_mutex_init(&st->deat, NULL);
-	pthread_mutex_init(&st->time_t, NULL);
 	pthread_mutex_init(&st->meal_m, NULL);
+	pthread_mutex_init(&st->time_t, NULL);
 	st->someone_died = -1;
 }
 
